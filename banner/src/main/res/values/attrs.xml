@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="DotView">
+    <declare-styleable name="DotIndicator">
         <attr name="dot" format="reference"/>
         <attr name="dotMargin" format="dimension"/>
     </declare-styleable>

@@ -1,4 +1,4 @@
-package com.pngfi.banner;
+package com.pngfi.banner.indicator;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,13 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.pngfi.banner.R;
+
 import java.util.List;
 
 /**
  * Created by pngfi on 2018/3/21.
  */
 
-public class DotView extends LinearLayout implements Indicator {
+public class DotIndicator extends LinearLayout implements Indicator {
 
 
     private int dotRes;
@@ -25,11 +27,11 @@ public class DotView extends LinearLayout implements Indicator {
     private int selectedPosition = 0;
 
 
-    public DotView(Context context) {
+    public DotIndicator(Context context) {
         this(context, null);
     }
 
-    public DotView(Context context, AttributeSet attrs) {
+    public DotIndicator(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
@@ -37,9 +39,9 @@ public class DotView extends LinearLayout implements Indicator {
     private void init(Context context, AttributeSet attrs) {
         setOrientation(HORIZONTAL);
         setGravity(Gravity.CENTER);
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.DotView);
-        dotRes = ta.getResourceId(R.styleable.DotView_dot, R.drawable.bg_dot_view);
-        dotMargin = (int) ta.getDimension(R.styleable.DotView_dotMargin, dp2px(12));
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.DotIndicator);
+        dotRes = ta.getResourceId(R.styleable.DotIndicator_dot, R.drawable.bg_dot_view);
+        dotMargin = (int) ta.getDimension(R.styleable.DotIndicator_dotMargin, dp2px(12));
         ta.recycle();
     }
 

@@ -1,4 +1,4 @@
-package com.pngfi.banner;
+package com.pngfi.banner.indicator;
 
 import java.util.List;
 

@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 
 import com.pngfi.banner.adapter.LoopPageAdapter;
 import com.pngfi.banner.adapter.ViewHolder;
+import com.pngfi.banner.indicator.Indicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,7 +132,6 @@ public class LoopViewPager extends ViewPager {
             mIndicator.setData(data);
         }
         once = data.size() == 1;
-        setManualTurning(!once);
         mAdapter.setData(data);
         setCurrentItem(0);
         startTuring();
