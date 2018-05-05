@@ -4,12 +4,13 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+
+import java.util.List;
 
 /**
  * Created by pngfi on 2018/3/21.
@@ -34,8 +35,8 @@ public class DotView extends LinearLayout implements Indicator {
     }
 
     private void init(Context context, AttributeSet attrs) {
-
         setOrientation(HORIZONTAL);
+        setGravity(Gravity.CENTER);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.DotView);
         dotRes = ta.getResourceId(R.styleable.DotView_dot, R.drawable.bg_dot_view);
         dotMargin = (int) ta.getDimension(R.styleable.DotView_dotMargin, dp2px(12));
@@ -49,24 +50,25 @@ public class DotView extends LinearLayout implements Indicator {
     }
 
 
+
     @Override
-    public void setCount(int count) {
-        if (count <= 0)
+    public <T> void setData(List<T> data) {
+        if (data==null||data.size()<=0)
             return;
-        if (count <= 1)
+        if (data.size()<= 1)
             setVisibility(View.INVISIBLE);
         else
             setVisibility(View.VISIBLE);
         removeAllViews();
-        selectedPosition=0;
-        for (int i = 0; i < count; i++) {
+        selectedPosition = 0;
+        for (int i = 0; i < data.size(); i++) {
             final ImageView imageView = new ImageView(getContext());
-            MarginLayoutParams lp = new MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            lp.rightMargin = i == count - 1 ? 0 : dotMargin;
+            LayoutParams lp=new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            lp.rightMargin= (i == data.size()- 1 ? 0 : dotMargin);
             imageView.setLayoutParams(lp);
             imageView.setImageResource(dotRes);
             addView(imageView);
-            if (i == selectedPosition){
+            if (i == selectedPosition) {
                 imageView.post(new Runnable() {
                     @Override
                     public void run() {
@@ -75,11 +77,7 @@ public class DotView extends LinearLayout implements Indicator {
                 });
             }
         }
-
     }
-
-
-
 
     @Override
     public void setSelected(int position) {

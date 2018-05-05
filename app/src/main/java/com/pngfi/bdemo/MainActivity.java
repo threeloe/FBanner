@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
         banner.setPageMargin(dp2px(8));
         banner.bindIndicator(dotView);
         banner.setData(Arrays.asList(images));
-        banner.setOffscreenPageLimit(2);
-        banner.setAutoTurning(false);
     }
 
 
@@ -48,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         public View getView(Context context, final int position, String data) {
             final View inflate = LayoutInflater.from(context).inflate(R.layout.item_banner_apartment_activity, null);
             ImageView imageView = inflate.findViewById(R.id.image);
-            GlideApp.with(imageView).load(data).transforms(new CenterCrop(), new RoundedCorners(dp2px(10))).into(imageView);
+            GlideApp.with(imageView).load(data).transforms(new CenterCrop(), new RoundedCorners(dp2px(10))).disallowHardwareConfig().into(imageView);
             return inflate;
         }
     }

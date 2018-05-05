@@ -10,32 +10,21 @@ import java.util.List;
 /**
  * Created by pngfi on 2018/3/20.
  */
-public class LoopPageAdapter<T> extends PagerAdapter {
+public class LoopPageAdapter<R> extends PagerAdapter {
 
-    protected List<T> mData;
-    protected ViewHolder<T> viewHolder;
+    protected List<R> mData = new ArrayList<>();
+    protected ViewHolder<R> viewHolder;
+    private boolean once;
 
-    public int toRealPosition(int position) {
-        int realCount = getRealCount();
-        if (realCount == 0)
-            return 0;
-        int realPosition = position % realCount;
-        return realPosition;
-    }
 
-    @Override
     public int getCount() {
-        return getRealCount() == 0 ? 0 : Integer.MAX_VALUE;
+        return mData.size();
     }
 
-    public int getRealCount() {
-        return mData == null ? 0 : mData.size();
-    }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        int realPosition = toRealPosition(position);
-        View view = viewHolder.getView(container.getContext(), realPosition, mData.get(realPosition));
+        View view = viewHolder.getView(container.getContext(), toRealPosition(position), mData.get(position));
         container.addView(view);
         return view;
     }
@@ -57,8 +46,37 @@ public class LoopPageAdapter<T> extends PagerAdapter {
         mData = new ArrayList<>();
     }
 
-   public void setData(List<T> datas) {
-        mData = datas;
+    public void setData(List<R> data) {
+        mData.clear();
+        mData.addAll(data);
+        once = data.size() == 1;
+        if (!once) {
+            R first = data.get(0);
+            R last = data.get(data.size() - 1);
+            mData.add(first);
+            mData.add(0, last);
+        }
         notifyDataSetChanged();
     }
+
+
+    public int toRealPosition(int position) {
+        if (once)
+            return 0;
+        if (position == getCount() - 1) {
+            return 0;
+        } else if (position == 0) {
+            return getCount() - 3;
+        } else {
+            return position - 1;
+        }
+    }
+
+
+    public int toPosition(int realPosition) {
+        if (once)
+            return 0;
+        return realPosition + 1;
+    }
+
 }

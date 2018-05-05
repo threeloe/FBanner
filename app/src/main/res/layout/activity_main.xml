@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="15dp"
     android:clipChildren="false"
     android:layerType="software"
     android:orientation="vertical">
@@ -11,7 +10,8 @@
     <com.pngfi.banner.LoopViewPager
         android:id="@+id/banner"
         android:layout_width="match_parent"
-        android:layout_marginRight="15dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:layout_height="194dp"
         android:layout_marginTop="15dp" />
 
@@ -25,22 +25,4 @@
         app:dot="@drawable/bg_dot_view"
         app:dotMargin="16dp" />
 
-
-    <Button
-        android:onClick="plus1"
-        android:text="每次加1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-
-    <Button
-        android:text="加5"
-        android:onClick="plus5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:text="指定一页"
-        android:onClick="seekTo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 </LinearLayout>

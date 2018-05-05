@@ -5,13 +5,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 
 
 import com.pngfi.banner.adapter.LoopPageAdapter;
 import com.pngfi.banner.adapter.ViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,21 +20,22 @@ import java.util.List;
  */
 public class LoopViewPager extends ViewPager {
 
+    private static final String TAG = "LoopViewPager";
 
-    OnPageChangeListener mOnLoopPageChangeListener;
     private LoopPageAdapter mAdapter;
 
-    private boolean canScroll = true; //手指能滑动
-    private static final int MSG_SLIDING = 0X11;
+    private static final int MSG_AUTO_TURNING = 0X208;
 
+    //是否能手动翻页
+    private boolean manualTurning = true;
+    //是否自动翻页
+    private boolean autoTurning = true;
     private int turningDuration = 2000;
 
 
-    private boolean autoTurning = true;
-
     //只有一张图片
     private boolean once = false;
-
+    private Indicator mIndicator;
 
     public LoopViewPager(Context context) {
         this(context, null);
@@ -49,18 +51,18 @@ public class LoopViewPager extends ViewPager {
 
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what == MSG_SLIDING) {
+            if (msg.what == MSG_AUTO_TURNING) {
                 if (once || !autoTurning) {
                     stopTurning();
                     return;
                 }
                 //没有数据
-                if (mAdapter.getCount() == 0) {
+                if (mAdapter == null || mAdapter.getCount() == 0) {
                     return;
                 }
                 int item = LoopViewPager.super.getCurrentItem();
-                setCurrentItem(item + 1, true);
-                mHandler.sendEmptyMessageDelayed(MSG_SLIDING, turningDuration);
+                LoopViewPager.super.setCurrentItem(item + 1, true);
+                mHandler.sendEmptyMessageDelayed(MSG_AUTO_TURNING, turningDuration);
             }
         }
     };
@@ -76,26 +78,42 @@ public class LoopViewPager extends ViewPager {
     }
 
     @Override
+    public void setCurrentItem(int item) {
+        super.setCurrentItem(mAdapter.toPosition(item));
+    }
+
+    @Override
+    public void setCurrentItem(int item, boolean smoothScroll) {
+        super.setCurrentItem(mAdapter.toPosition(item), smoothScroll);
+    }
+
+    @Override
+    public int getCurrentItem() {
+        return mAdapter.toRealPosition(super.getCurrentItem());
+    }
+
+    @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mHandler.removeCallbacksAndMessages(null);
+        super.removeOnPageChangeListener(proxyRootListener);
     }
 
     private void startTuring() {
-        if (mHandler.hasMessages(MSG_SLIDING))
-            mHandler.removeMessages(MSG_SLIDING);
-        mHandler.sendEmptyMessageDelayed(MSG_SLIDING, turningDuration);
+        if (mHandler.hasMessages(MSG_AUTO_TURNING))
+            mHandler.removeMessages(MSG_AUTO_TURNING);
+        mHandler.sendEmptyMessageDelayed(MSG_AUTO_TURNING, turningDuration);
     }
 
     private void stopTurning() {
-        if (mHandler.hasMessages(MSG_SLIDING)) {
-            mHandler.removeMessages(MSG_SLIDING);
+        if (mHandler.hasMessages(MSG_AUTO_TURNING)) {
+            mHandler.removeMessages(MSG_AUTO_TURNING);
         }
     }
 
     private void init() {
         setOffscreenPageLimit(2);
-        addOnPageChangeListener(onPageChangeListener);
+        super.addOnPageChangeListener(proxyRootListener);
     }
 
     public <T> void setViewHolder(ViewHolder<T> holder) {
@@ -104,26 +122,24 @@ public class LoopViewPager extends ViewPager {
     }
 
     public <T> void setData(List<T> data) {
+        if (mAdapter == null) {
+            throw new IllegalStateException("setViewHolder must be called first");
+        }
         if (data == null || data.size() == 0)
             return;
-        mAdapter.setData(data);
         if (mIndicator != null) {
-            mIndicator.setCount(data.size());
+            mIndicator.setData(data);
         }
         once = data.size() == 1;
-        setCanScroll(!once);
-        /**
-         * 起始的参数设置很重要，不能设置太大。太大会导致两个问题：
-         * 1.ANR 由于ViewPager的测量在主线程中 ,例如设置为Integer.MAX_VALUE/2
-         * 2.不会ANR，但是布局测量出现问题，导致page与page之间重叠紊乱，例如100000*data.size()
-         */
-        int times= Integer.MAX_VALUE / data.size();
-        setCurrentItem(100*data.size(),false);
+        setManualTurning(!once);
+        mAdapter.setData(data);
+        setCurrentItem(0);
+        startTuring();
     }
 
 
-    public void setCanScroll(boolean isCanScroll) {
-        this.canScroll = isCanScroll;
+    public void setManualTurning(boolean isCanScroll) {
+        this.manualTurning = isCanScroll;
     }
 
     @Override
@@ -139,7 +155,7 @@ public class LoopViewPager extends ViewPager {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        if (canScroll) {
+        if (manualTurning) {
             return super.onTouchEvent(ev);
         } else
             return false;
@@ -147,7 +163,7 @@ public class LoopViewPager extends ViewPager {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (canScroll)
+        if (manualTurning)
             return super.onInterceptTouchEvent(ev);
         else
             return false;
@@ -157,28 +173,44 @@ public class LoopViewPager extends ViewPager {
         return mAdapter;
     }
 
-    public int getRealItem() {
-        return mAdapter != null ? mAdapter.toRealPosition(super.getCurrentItem()) : 0;
+
+    @Override
+    public void addOnPageChangeListener(OnPageChangeListener listener) {
+        mOnPageChangeListeners.add(listener);
     }
 
 
-    public void setOnLoopPageChangeListener(OnPageChangeListener listener) {
-        mOnLoopPageChangeListener = listener;
+    @Override
+    public void removeOnPageChangeListener(OnPageChangeListener listener) {
+        mOnPageChangeListeners.remove(listener);
     }
 
+    @Override
+    public void clearOnPageChangeListeners() {
+        mOnPageChangeListeners.clear();
+    }
+
+    @Override
+    public void setOnPageChangeListener(OnPageChangeListener onPageChangeListener) {
+        mOnPageChangeListeners.add(onPageChangeListener);
+    }
+
+    private ArrayList<OnPageChangeListener> mOnPageChangeListeners = new ArrayList<>();
 
 
-
-    private OnPageChangeListener onPageChangeListener = new OnPageChangeListener() {
-        private float mPreviousPosition = -1;
+    /**
+     *这个Listener用于分发所有事件
+     */
+    private OnPageChangeListener proxyRootListener = new OnPageChangeListener() {
+        private int mPreviousPosition = -1;
 
         @Override
         public void onPageSelected(int position) {
             int realPosition = mAdapter.toRealPosition(position);
             if (mPreviousPosition != realPosition) {
                 mPreviousPosition = realPosition;
-                if (mOnLoopPageChangeListener != null) {
-                    mOnLoopPageChangeListener.onPageSelected(realPosition);
+                for (OnPageChangeListener listener : mOnPageChangeListeners) {
+                    listener.onPageSelected(realPosition);
                 }
             }
         }
@@ -186,31 +218,26 @@ public class LoopViewPager extends ViewPager {
         @Override
         public void onPageScrolled(int position, float positionOffset,
                                    int positionOffsetPixels) {
-            int realPosition = position;
-
-            if (mOnLoopPageChangeListener != null) {
-                if (realPosition != mAdapter.getRealCount() - 1) {
-                    mOnLoopPageChangeListener.onPageScrolled(realPosition,
-                            positionOffset, positionOffsetPixels);
-                } else {
-                    if (positionOffset > 0.5) {
-                        mOnLoopPageChangeListener.onPageScrolled(0, 0, 0);
-                    } else {
-                        mOnLoopPageChangeListener.onPageScrolled(realPosition,
-                                0, 0);
-                    }
-                }
+            int realPosition = mAdapter.toRealPosition(position);
+            for (OnPageChangeListener listener : mOnPageChangeListeners) {
+                listener.onPageScrolled(realPosition, positionOffset, positionOffsetPixels);
             }
         }
 
         @Override
         public void onPageScrollStateChanged(int state) {
-            if (mOnLoopPageChangeListener != null) {
-                mOnLoopPageChangeListener.onPageScrollStateChanged(state);
+            if (state == ViewPager.SCROLL_STATE_IDLE || state == ViewPager.SCROLL_STATE_DRAGGING) {
+                if (LoopViewPager.super.getCurrentItem() == mAdapter.getCount() - 1) {
+                    LoopViewPager.super.setCurrentItem(1, false);
+                } else if (LoopViewPager.super.getCurrentItem() == 0) {
+                    LoopViewPager.super.setCurrentItem(mAdapter.getCount() - 2, false);
+                }
+            }
+            for (OnPageChangeListener listener : mOnPageChangeListeners) {
+                listener.onPageScrollStateChanged(state);
             }
         }
     };
-
 
 
     @Override
@@ -227,12 +254,9 @@ public class LoopViewPager extends ViewPager {
     }
 
 
-    private Indicator mIndicator;
-
-
     public void bindIndicator(Indicator indicator) {
         mIndicator = indicator;
-        setOnLoopPageChangeListener(new OnPageChangeListener() {
+        addOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -240,8 +264,8 @@ public class LoopViewPager extends ViewPager {
 
             @Override
             public void onPageSelected(int position) {
+                Log.i("LOOPViewPager", position + "---");
                 mIndicator.setSelected(position);
-
             }
 
             @Override
