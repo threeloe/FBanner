@@ -8,9 +8,16 @@ import java.util.List;
 
 public interface Indicator {
 
-    <T>void setData(List<T> data);
+    /**
+     * 设置页面的数量
+     * @param count
+     */
+    void setCount(int count);
 
-
+    /**
+     * 设置选中了position页面
+     * @param position
+     */
     void setSelected(int position);
 
 }

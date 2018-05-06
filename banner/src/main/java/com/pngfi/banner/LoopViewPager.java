@@ -129,7 +129,8 @@ public class LoopViewPager extends ViewPager {
         if (data == null || data.size() == 0)
             return;
         if (mIndicator != null) {
-            mIndicator.setData(data);
+            mIndicator.
+                    setCount(data.size());
         }
         once = data.size() == 1;
         mAdapter.setData(data);

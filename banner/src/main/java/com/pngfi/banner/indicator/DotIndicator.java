@@ -16,6 +16,26 @@ import java.util.List;
 
 /**
  * Created by pngfi on 2018/3/21.
+ *
+ * dot attr设置如下的drawable
+ *
+ * <selector xmlns:android="http://schemas.android.com/apk/res/android">
+ *  <item android:state_selected="false">
+ *      <shape android:shape="oval">
+ *          <solid android:color="#D8D8D8" />
+ *          <size android:width="5dp" android:height="5dp" />
+ *      </shape>
+ *  </item>
+ *  <item android:state_selected="true">
+ *      <shape  android:shape="oval">
+ *          <solid android:color="@android:color/white" />
+ *          <stroke android:width="0.5dp" android:color="#000000" />
+ *          <size android:width="5dp" android:height="5dp" />
+ *      </shape>
+ *  </item>
+ * </selector>
+ *
+ * dotMargin设置点之间的距离
  */
 
 public class DotIndicator extends LinearLayout implements Indicator {
@@ -54,19 +74,19 @@ public class DotIndicator extends LinearLayout implements Indicator {
 
 
     @Override
-    public <T> void setData(List<T> data) {
-        if (data==null||data.size()<=0)
+    public  void setCount(int  count) {
+        if (count<=0)
             return;
-        if (data.size()<= 1)
+        if (count<= 1)
             setVisibility(View.INVISIBLE);
         else
             setVisibility(View.VISIBLE);
         removeAllViews();
         selectedPosition = 0;
-        for (int i = 0; i < data.size(); i++) {
+        for (int i = 0; i < count; i++) {
             final ImageView imageView = new ImageView(getContext());
             LayoutParams lp=new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            lp.rightMargin= (i == data.size()- 1 ? 0 : dotMargin);
+            lp.rightMargin= (i == count ? 0 : dotMargin);
             imageView.setLayoutParams(lp);
             imageView.setImageResource(dotRes);
             addView(imageView);
