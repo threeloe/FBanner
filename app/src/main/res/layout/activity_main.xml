@@ -22,7 +22,16 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="21dp"
         android:layout_marginTop="15dp"
-        app:dot="@drawable/bg_dot_view"
+        app:dot="@drawable/default_bg_dot_view"
         app:dotMargin="16dp" />
+
+
+    <com.pngfi.banner.indicator.NumberIndicator
+        android:id="@+id/numberIndicator"
+        android:textColor="#f00"
+        android:text="哈"
+        android:layout_height="40dp"
+        android:layout_width="40dp"/>
+
 
 </LinearLayout>

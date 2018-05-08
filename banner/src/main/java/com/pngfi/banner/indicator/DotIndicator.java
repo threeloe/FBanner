@@ -12,8 +12,6 @@ import android.widget.LinearLayout;
 
 import com.pngfi.banner.R;
 
-import java.util.List;
-
 /**
  * Created by pngfi on 2018/3/21.
  *
@@ -60,7 +58,7 @@ public class DotIndicator extends LinearLayout implements Indicator {
         setOrientation(HORIZONTAL);
         setGravity(Gravity.CENTER);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.DotIndicator);
-        dotRes = ta.getResourceId(R.styleable.DotIndicator_dot, R.drawable.bg_dot_view);
+        dotRes = ta.getResourceId(R.styleable.DotIndicator_dot, R.drawable.default_bg_dot_view);
         dotMargin = (int) ta.getDimension(R.styleable.DotIndicator_dotMargin, dp2px(12));
         ta.recycle();
     }
