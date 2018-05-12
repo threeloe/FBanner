@@ -14,13 +14,18 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.pngfi.banner.indicator.DotIndicator;
 import com.pngfi.banner.LoopViewPager;
 import com.pngfi.banner.adapter.ViewHolder;
+import com.pngfi.banner.indicator.NumberIndicator;
 
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
-    private LoopViewPager banner;
+    private LoopViewPager firstBanner;
+    private LoopViewPager secondBanner;
+
     private DotIndicator dotView;
+    private NumberIndicator numberIndicator;
+
     private String[] images = {"https://pic.nanguazufang.cn/g3/05/d3/42f0-df28-4617-a216-71f15e1aaf7869",
             "https://pic.nanguazufang.cn/g3/10/fa/5b8c-107f-484b-a013-5613f463915231",
             "https://pic.nanguazufang.cn/g3/a3/9c/0832-2281-4925-a6f3-72ed9b3fe1a960",
@@ -32,12 +37,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        banner = findViewById(R.id.banner);
+        firstBanner = findViewById(R.id.banner);
         dotView = findViewById(R.id.dotView);
-        banner.setViewHolder(new BannerViewHolder());
-        banner.setPageMargin(dp2px(8));
-        banner.bindIndicator(dotView);
-        banner.setData(Arrays.asList(images));
+        firstBanner.setViewHolder(new BannerViewHolder());
+        firstBanner.setPageMargin(dp2px(8));
+        firstBanner.bindIndicator(dotView);
+        firstBanner.setData(Arrays.asList(images));
+
+        secondBanner=findViewById(R.id.secondBanner);
+        numberIndicator=findViewById(R.id.numberIndicator);
+        secondBanner.setViewHolder(new BannerViewHolder());
+        secondBanner.bindIndicator(numberIndicator);
+        secondBanner.setData(Arrays.asList(images));
+
     }
 
 
@@ -57,17 +69,17 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void plus1(View view) {
-        banner.setCurrentItem(banner.getCurrentItem() + 1);
+        firstBanner.setCurrentItem(firstBanner.getCurrentItem() + 1);
     }
 
     public void plus5(View view) {
-        banner.setCurrentItem(banner.getCurrentItem() + 4);
+        firstBanner.setCurrentItem(firstBanner.getCurrentItem() + 4);
 
     }
 
     public void seekTo(View view) {
         long begin = System.currentTimeMillis();
-        banner.setCurrentItem(banner.getCurrentItem() + 1000000000, false);
+        firstBanner.setCurrentItem(firstBanner.getCurrentItem() + 1000000000, false);
         Log.i("Main", System.currentTimeMillis() - begin + "----");
 
     }

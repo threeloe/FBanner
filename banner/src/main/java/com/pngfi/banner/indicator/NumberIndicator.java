@@ -1,12 +1,12 @@
 package com.pngfi.banner.indicator;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.Gravity;
+
 
 import com.pngfi.banner.R;
 
@@ -21,7 +21,7 @@ import java.util.List;
 
 public class NumberIndicator extends AppCompatTextView implements Indicator {
 
-    private static final int DEFAULE_TEXT_COLOR=Color.parseColor("#EAEAEA");
+    private static final int DEFAULE_TEXT_COLOR= Color.parseColor("#EAEAEA");
     private int mCount;
 
     public NumberIndicator(Context context) {
@@ -60,6 +60,7 @@ public class NumberIndicator extends AppCompatTextView implements Indicator {
         if (count<=0)
             return;
         mCount=count;
+
     }
 
     @Override

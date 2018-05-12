@@ -7,31 +7,52 @@
     android:layerType="software"
     android:orientation="vertical">
 
-    <com.pngfi.banner.LoopViewPager
-        android:id="@+id/banner"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_height="194dp"
-        android:layout_marginTop="15dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <com.pngfi.banner.indicator.DotIndicator
-        android:id="@+id/dotView"
+        <com.pngfi.banner.LoopViewPager
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="194dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="15dp" />
+
+        <com.pngfi.banner.indicator.DotIndicator
+            android:id="@+id/dotView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="21dp"
+            android:layout_marginTop="15dp"
+            app:dot="@drawable/default_bg_dot_view"
+            app:dotMargin="16dp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="21dp"
-        android:layout_marginTop="15dp"
-        app:dot="@drawable/default_bg_dot_view"
-        app:dotMargin="16dp" />
+        android:layout_height="194dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp">
 
+        <com.pngfi.banner.LoopViewPager
+            android:id="@+id/secondBanner"
+            android:layout_width="match_parent"
+            android:layout_height="194dp"></com.pngfi.banner.LoopViewPager>
 
-    <com.pngfi.banner.indicator.NumberIndicator
-        android:id="@+id/numberIndicator"
-        android:textColor="#f00"
-        android:text="哈"
-        android:layout_height="40dp"
-        android:layout_width="40dp"/>
+        <com.pngfi.banner.indicator.NumberIndicator
+            android:id="@+id/numberIndicator"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:textColor="#f00" />
+    </RelativeLayout>
 
 
 </LinearLayout>
