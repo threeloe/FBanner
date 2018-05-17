@@ -10,8 +10,6 @@ import android.view.Gravity;
 
 import com.pngfi.banner.R;
 
-import java.util.List;
-
 /**
  * Created by pngfi on 2018/5/5.
  *
@@ -21,7 +19,7 @@ import java.util.List;
 
 public class NumberIndicator extends AppCompatTextView implements Indicator {
 
-    private static final int DEFAULE_TEXT_COLOR= Color.parseColor("#EAEAEA");
+    private static final int DEFAULT_TEXT_COLOR = Color.parseColor("#EAEAEA");
     private int mCount;
 
     public NumberIndicator(Context context) {
@@ -46,7 +44,7 @@ public class NumberIndicator extends AppCompatTextView implements Indicator {
             }
         }
         if (!hasTextColor){
-            setTextColor(DEFAULE_TEXT_COLOR);
+            setTextColor(DEFAULT_TEXT_COLOR);
         }
         if (!hasBackground){
             setBackgroundResource(R.drawable.default_bg_number_indicator);
@@ -57,8 +55,11 @@ public class NumberIndicator extends AppCompatTextView implements Indicator {
 
     @Override
     public  void setCount(int count) {
-        if (count<=0)
-            return;
+        if (count<=1){
+            setVisibility(INVISIBLE);
+        }else {
+            setVisibility(VISIBLE);
+        }
         mCount=count;
 
     }

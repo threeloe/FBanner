@@ -1,58 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clipChildren="false"
-    android:layerType="software"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.pngfi.banner.LoopViewPager
-            android:id="@+id/banner"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:layerType="software"
+            android:orientation="vertical">
+
+            <com.pngfi.banner.LoopViewPager
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="194dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="15dp" />
+
+            <com.pngfi.banner.indicator.DotIndicator
+                android:id="@+id/dotView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="21dp"
+                android:layout_marginTop="15dp"
+                app:dot="@drawable/default_bg_dot_view"
+                app:dotMargin="16dp" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <com.pngfi.banner.LoopViewPager
+                android:id="@+id/second"
+                android:layout_width="match_parent"
+                android:layout_height="194dp" />
+
+            <com.pngfi.banner.indicator.DotIndicator
+                android:id="@+id/dotView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="20dp"
+                app:dot="@drawable/bg_dot_indicator"
+                app:dotMargin="1dp" />
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="194dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="35dp">
+
+            <com.pngfi.banner.LoopViewPager
+                android:id="@+id/thirdBanner"
+                android:layout_width="match_parent"
+                android:layout_height="194dp" />
+
+            <com.pngfi.banner.indicator.NumberIndicator
+                android:id="@+id/numberIndicator"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/bg_number_indicator"
+                android:textColor="@color/colorAccent" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="194dp"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
-            android:layout_marginTop="15dp" />
+            android:layout_marginTop="40dp">
 
-        <com.pngfi.banner.indicator.DotIndicator
-            android:id="@+id/dotView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="21dp"
-            android:layout_marginTop="15dp"
-            app:dot="@drawable/default_bg_dot_view"
-            app:dotMargin="16dp" />
+            <com.pngfi.banner.LoopViewPager
+                android:id="@+id/fourthBanner"
+                android:layout_width="match_parent"
+                android:layout_height="194dp" />
 
-    </LinearLayout>
+            <com.pngfi.banner.indicator.TitleIndicator
+                android:id="@+id/titleIndicator"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp" />
+        </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="194dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp">
-
-        <com.pngfi.banner.LoopViewPager
-            android:id="@+id/secondBanner"
+        <FrameLayout
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
             android:layout_width="match_parent"
-            android:layout_height="194dp"></com.pngfi.banner.LoopViewPager>
+            android:layout_height="194dp"
+            android:layout_marginTop="35dp">
 
-        <com.pngfi.banner.indicator.NumberIndicator
-            android:id="@+id/numberIndicator"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="20dp"
-            android:textColor="#f00" />
-    </RelativeLayout>
+            <com.pngfi.banner.LoopViewPager
+                android:id="@+id/fifthBanner"
+                android:layout_width="match_parent"
+                android:layout_height="194dp" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="#55000000"
+                android:layout_height="30dp"
+                android:layout_gravity="bottom">
 
-</LinearLayout>
+                <com.pngfi.banner.indicator.TitleIndicator
+                    android:id="@+id/titleIndicator2"
+                    android:layout_width="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:layout_centerVertical="true"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp" />
+
+                <com.pngfi.banner.indicator.NumberIndicator
+                    android:id="@+id/numberIndicator2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@android:color/transparent"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/colorAccent" />
+            </RelativeLayout>
+
+        </FrameLayout>
+
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

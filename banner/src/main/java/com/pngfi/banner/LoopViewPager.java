@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.WindowId;
 
 
 import com.pngfi.banner.adapter.LoopPageAdapter;
@@ -36,7 +37,7 @@ public class LoopViewPager extends ViewPager {
 
     //只有一张图片
     private boolean once = false;
-    private Indicator mIndicator;
+    private List<Indicator> mIndicators = new ArrayList<>();
 
     public LoopViewPager(Context context) {
         this(context, null);
@@ -128,10 +129,10 @@ public class LoopViewPager extends ViewPager {
         }
         if (data == null || data.size() == 0)
             return;
-        if (mIndicator != null) {
-            mIndicator.
-                    setCount(data.size());
+        for (Indicator indicator : mIndicators) {
+            indicator.setCount(data.size());
         }
+
         once = data.size() == 1;
         mAdapter.setData(data);
         setCurrentItem(0);
@@ -200,7 +201,7 @@ public class LoopViewPager extends ViewPager {
 
 
     /**
-     *这个Listener用于分发所有事件
+     * 这个Listener用于分发所有事件
      */
     private OnPageChangeListener proxyRootListener = new OnPageChangeListener() {
         private int mPreviousPosition = -1;
@@ -255,8 +256,12 @@ public class LoopViewPager extends ViewPager {
     }
 
 
-    public void bindIndicator(Indicator indicator) {
-        mIndicator = indicator;
+    /**
+     * called before setData
+     * @param indicator
+     */
+    public void addIndicator(Indicator indicator) {
+        mIndicators.add(indicator);
         addOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -265,8 +270,9 @@ public class LoopViewPager extends ViewPager {
 
             @Override
             public void onPageSelected(int position) {
-                Log.i("LOOPViewPager", position + "---");
-                mIndicator.setSelected(position);
+                for (Indicator in:mIndicators){
+                    in.setSelected(position);
+                }
             }
 
             @Override
