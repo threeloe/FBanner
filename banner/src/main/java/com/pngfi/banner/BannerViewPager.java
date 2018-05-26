@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Created by pngfi on 2018/3/20.
  */
-public class LoopViewPager extends ViewPager {
+public class BannerViewPager extends ViewPager {
 
     private static final String TAG = "LoopViewPager";
 
@@ -43,21 +43,21 @@ public class LoopViewPager extends ViewPager {
     private List<Indicator> mIndicators = new ArrayList<>();
     private InternalScroller mScroller;
 
-    public LoopViewPager(Context context) {
+    public BannerViewPager(Context context) {
         this(context, null);
     }
 
-    public LoopViewPager(Context context, AttributeSet attrs) {
+    public BannerViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
     private void init(Context context, AttributeSet attrs) {
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.LoopViewPager);
-        autoTurning = ta.getBoolean(R.styleable.LoopViewPager_autoTurning, true);
-        manualTurning = ta.getBoolean(R.styleable.LoopViewPager_manualTurning, true);
-        turningDuration = ta.getInt(R.styleable.LoopViewPager_turningDuration, 2000);
-        smoothScrollDuration = ta.getInt(R.styleable.LoopViewPager_smoothScrollDuration, 900);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BannerViewPager);
+        autoTurning = ta.getBoolean(R.styleable.BannerViewPager_autoTurning, true);
+        manualTurning = ta.getBoolean(R.styleable.BannerViewPager_manualTurning, true);
+        turningDuration = ta.getInt(R.styleable.BannerViewPager_turningDuration, 2000);
+        smoothScrollDuration = ta.getInt(R.styleable.BannerViewPager_smoothScrollDuration, 900);
 
         super.addOnPageChangeListener(proxyRootListener);
         try {
@@ -83,7 +83,7 @@ public class LoopViewPager extends ViewPager {
                     stopTurning();
                     return;
                 }
-                int item = LoopViewPager.super.getCurrentItem();
+                int item = BannerViewPager.super.getCurrentItem();
                 setCurrentItemSuper(item + 1, true);
                 mHandler.sendEmptyMessageDelayed(MSG_AUTO_TURNING, turningDuration);
             }
@@ -252,9 +252,9 @@ public class LoopViewPager extends ViewPager {
         @Override
         public void onPageScrollStateChanged(int state) {
             if (state == ViewPager.SCROLL_STATE_IDLE || state == ViewPager.SCROLL_STATE_DRAGGING) {
-                if (LoopViewPager.super.getCurrentItem() == mAdapter.getCount() - 1) {
+                if (BannerViewPager.super.getCurrentItem() == mAdapter.getCount() - 1) {
                     setCurrentItemSuper(1, false);
-                } else if (LoopViewPager.super.getCurrentItem() == 0) {
+                } else if (BannerViewPager.super.getCurrentItem() == 0) {
                     setCurrentItemSuper(mAdapter.getCount() - 2, false);
                 }
             }

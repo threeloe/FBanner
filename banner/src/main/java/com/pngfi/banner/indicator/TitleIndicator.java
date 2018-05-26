@@ -55,14 +55,14 @@ public class TitleIndicator extends TextView implements Indicator{
 
     public void setTitles(List<CharSequence> titles){
         mTitles=titles;
+        if (mTitles!=null&&mTitles.size()!=0){
+            setText(mTitles.get(0));
+        }
     }
 
     @Override
     public void setCount(int count) {
-        if (count<=1)
-            setVisibility(View.INVISIBLE);
-        else
-            setVisibility(View.VISIBLE);
+
     }
 
     @Override

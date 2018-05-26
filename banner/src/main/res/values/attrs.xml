@@ -6,7 +6,7 @@
         <attr name="dotMargin" format="dimension"/>
     </declare-styleable>
 
-    <declare-styleable name="LoopViewPager">
+    <declare-styleable name="BannerViewPager">
         <attr name="autoTurning" format="boolean"/>
         <attr name="turningDuration" format="integer"/>
         <attr name="manualTurning" format="boolean"/>

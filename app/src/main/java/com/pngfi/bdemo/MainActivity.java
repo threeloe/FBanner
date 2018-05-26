@@ -12,33 +12,22 @@ import android.widget.Toast;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.pngfi.banner.indicator.DotIndicator;
-import com.pngfi.banner.LoopViewPager;
+import com.pngfi.banner.BannerViewPager;
 import com.pngfi.banner.adapter.ViewHolder;
 import com.pngfi.banner.indicator.NumberIndicator;
 import com.pngfi.banner.indicator.TitleIndicator;
-import com.pngfi.banner.transformer.AccordionTransformer;
-import com.pngfi.banner.transformer.CubeInTransformer;
-import com.pngfi.banner.transformer.CubeOutTransformer;
-import com.pngfi.banner.transformer.DefaultTransformer;
-import com.pngfi.banner.transformer.DepthPageTransformer;
 import com.pngfi.banner.transformer.MultiPageRotateDownPageTransformer;
-import com.pngfi.banner.transformer.RotateDownTransformer;
 import com.pngfi.banner.transformer.RotateUpTransformer;
-import com.pngfi.banner.transformer.ScaleInOutTransformer;
-import com.pngfi.banner.transformer.StackTransformer;
-import com.pngfi.banner.transformer.ZoomInTransformer;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private LoopViewPager firstBanner;
-    private LoopViewPager secondBanner;
-    private LoopViewPager thirdBanner;
-    private LoopViewPager fourthBanner;
-    private LoopViewPager fifthBanner;
+    private BannerViewPager firstBanner;
+    private BannerViewPager secondBanner;
+    private BannerViewPager thirdBanner;
+    private BannerViewPager fourthBanner;
+    private BannerViewPager fifthBanner;
 
 
     private DotIndicator dotView;
@@ -84,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
         fourthBanner = findViewById(R.id.fourthBanner);
         titleIndicator = findViewById(R.id.titleIndicator);
         fourthBanner.setViewHolder(new BannerViewHolder(false));
-        fourthBanner.addIndicator(titleIndicator);
         titleIndicator.setTitles(Arrays.asList(titles));
+        fourthBanner.addIndicator(titleIndicator);
         fourthBanner.setData(Arrays.asList(images));
 
 

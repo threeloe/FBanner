@@ -61,7 +61,7 @@ public class NumberIndicator extends TextView implements Indicator {
             setVisibility(VISIBLE);
         }
         mCount=count;
-
+        setText("1/"+count);
     }
 
     @Override
