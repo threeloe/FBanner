@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -58,7 +59,10 @@ public class TitleIndicator extends TextView implements Indicator{
 
     @Override
     public void setCount(int count) {
-
+        if (count<=1)
+            setVisibility(View.INVISIBLE);
+        else
+            setVisibility(View.VISIBLE);
     }
 
     @Override

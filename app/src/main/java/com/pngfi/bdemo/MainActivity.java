@@ -49,11 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private NumberIndicator numberIndicator2;
 
 
-    private String[] images = {"https://pic.nanguazufang.cn/g3/05/d3/42f0-df28-4617-a216-71f15e1aaf7869",
-            "https://pic.nanguazufang.cn/g3/10/fa/5b8c-107f-484b-a013-5613f463915231",
-            "https://pic.nanguazufang.cn/g3/a3/9c/0832-2281-4925-a6f3-72ed9b3fe1a960",
-            "https://pic.nanguazufang.cn/g3/6e/1d/474b-91d3-4a7f-9c5f-b723f7194a7d08",
-            "https://pic.nanguazufang.cn/g3/85/8f/9278-9261-4794-88de-13f9c275dfcb86"};
+    private String[] images = {"https://pic.nanguazufang.cn/g3/05/d3/42f0-df28-4617-a216-71f15e1aaf7869"};
 
     private CharSequence[] titles = {"在不一样的十几节", "昨夜小楼又东风", "此去经年", "贝加尔湖畔", "悠长悠长而寂寥的雨巷"};
 
