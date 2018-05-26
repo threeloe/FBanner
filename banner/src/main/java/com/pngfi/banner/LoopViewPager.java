@@ -1,19 +1,22 @@
 package com.pngfi.banner;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
-import android.view.WindowId;
+import android.view.View;
+import android.view.animation.Interpolator;
+import android.widget.Scroller;
 
 
 import com.pngfi.banner.adapter.LoopPageAdapter;
 import com.pngfi.banner.adapter.ViewHolder;
 import com.pngfi.banner.indicator.Indicator;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,18 +29,19 @@ public class LoopViewPager extends ViewPager {
 
     private LoopPageAdapter mAdapter;
 
-    private static final int MSG_AUTO_TURNING = 0X208;
+
+    private ArrayList<OnPageChangeListener> mOnPageChangeListeners = new ArrayList<>();
+    private static final int MSG_AUTO_TURNING = 0X520;
 
     //是否能手动翻页
     private boolean manualTurning = true;
     //是否自动翻页
     private boolean autoTurning = true;
     private int turningDuration = 2000;
+    private int smoothScrollDuration = 900;
 
-
-    //只有一张图片
-    private boolean once = false;
     private List<Indicator> mIndicators = new ArrayList<>();
+    private InternalScroller mScroller;
 
     public LoopViewPager(Context context) {
         this(context, null);
@@ -45,39 +49,47 @@ public class LoopViewPager extends ViewPager {
 
     public LoopViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context, attrs);
     }
 
+    private void init(Context context, AttributeSet attrs) {
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.LoopViewPager);
+        autoTurning = ta.getBoolean(R.styleable.LoopViewPager_autoTurning, true);
+        manualTurning = ta.getBoolean(R.styleable.LoopViewPager_manualTurning, true);
+        turningDuration = ta.getInt(R.styleable.LoopViewPager_turningDuration, 2000);
+        smoothScrollDuration = ta.getInt(R.styleable.LoopViewPager_smoothScrollDuration, 900);
+
+        super.addOnPageChangeListener(proxyRootListener);
+        try {
+            Field scrollField = ViewPager.class.getDeclaredField("mScroller");
+            scrollField.setAccessible(true);
+            mScroller = new InternalScroller(getContext());
+            mScroller.setDuration(smoothScrollDuration);
+            scrollField.set(this, mScroller);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
 
     private Handler mHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == MSG_AUTO_TURNING) {
-                if (once || !autoTurning) {
+                //没有数据
+                if (mAdapter == null || mAdapter.getCount() == 0 || mAdapter.getCount() == 1 || !autoTurning) {
                     stopTurning();
                     return;
                 }
-                //没有数据
-                if (mAdapter == null || mAdapter.getCount() == 0) {
-                    return;
-                }
                 int item = LoopViewPager.super.getCurrentItem();
-                LoopViewPager.super.setCurrentItem(item + 1, true);
+                setCurrentItemSuper(item + 1, true);
                 mHandler.sendEmptyMessageDelayed(MSG_AUTO_TURNING, turningDuration);
             }
         }
     };
 
-
-    public void setAutoTurning(boolean autoTurning) {
-        this.autoTurning = autoTurning;
-        if (autoTurning) {
-            startTuring();
-        } else {
-            stopTurning();
-        }
-    }
 
     @Override
     public void setCurrentItem(int item) {
@@ -86,7 +98,7 @@ public class LoopViewPager extends ViewPager {
 
     @Override
     public void setCurrentItem(int item, boolean smoothScroll) {
-        super.setCurrentItem(mAdapter.toPosition(item), smoothScroll);
+        setCurrentItemSuper(mAdapter.toPosition(item), smoothScroll);
     }
 
     @Override
@@ -113,10 +125,6 @@ public class LoopViewPager extends ViewPager {
         }
     }
 
-    private void init() {
-        setOffscreenPageLimit(2);
-        super.addOnPageChangeListener(proxyRootListener);
-    }
 
     public <T> void setViewHolder(ViewHolder<T> holder) {
         mAdapter = new LoopPageAdapter(holder);
@@ -133,15 +141,32 @@ public class LoopViewPager extends ViewPager {
             indicator.setCount(data.size());
         }
 
-        once = data.size() == 1;
         mAdapter.setData(data);
         setCurrentItem(0);
         startTuring();
     }
 
+    public void setAutoTurning(boolean autoTurning) {
+        this.autoTurning = autoTurning;
+        if (autoTurning) {
+            startTuring();
+        } else {
+            stopTurning();
+        }
+    }
 
-    public void setManualTurning(boolean isCanScroll) {
-        this.manualTurning = isCanScroll;
+
+    private void setCurrentItemSuper(int item, boolean smoothScroll) {
+        super.setCurrentItem(item, smoothScroll);
+    }
+
+    /**
+     * 是否手动翻页，
+     *
+     * @param manualTurning 默认true
+     */
+    public void setManualTurning(boolean manualTurning) {
+        this.manualTurning = manualTurning;
     }
 
     @Override
@@ -197,8 +222,6 @@ public class LoopViewPager extends ViewPager {
         mOnPageChangeListeners.add(onPageChangeListener);
     }
 
-    private ArrayList<OnPageChangeListener> mOnPageChangeListeners = new ArrayList<>();
-
 
     /**
      * 这个Listener用于分发所有事件
@@ -230,9 +253,9 @@ public class LoopViewPager extends ViewPager {
         public void onPageScrollStateChanged(int state) {
             if (state == ViewPager.SCROLL_STATE_IDLE || state == ViewPager.SCROLL_STATE_DRAGGING) {
                 if (LoopViewPager.super.getCurrentItem() == mAdapter.getCount() - 1) {
-                    LoopViewPager.super.setCurrentItem(1, false);
+                    setCurrentItemSuper(1, false);
                 } else if (LoopViewPager.super.getCurrentItem() == 0) {
-                    LoopViewPager.super.setCurrentItem(mAdapter.getCount() - 2, false);
+                    setCurrentItemSuper(mAdapter.getCount() - 2, false);
                 }
             }
             for (OnPageChangeListener listener : mOnPageChangeListeners) {
@@ -256,8 +279,25 @@ public class LoopViewPager extends ViewPager {
     }
 
 
+    @Override
+    public void setPageTransformer(boolean reverseDrawingOrder, PageTransformer transformer) {
+        setPageTransformer(reverseDrawingOrder, transformer, View.LAYER_TYPE_HARDWARE);
+    }
+
+    @Override
+    public void setPageTransformer(boolean reverseDrawingOrder, PageTransformer transformer, int pageLayerType) {
+        super.setPageTransformer(reverseDrawingOrder, transformer, pageLayerType);
+        if (transformer == null) {
+            setOffscreenPageLimit(1);
+        } else {
+            setOffscreenPageLimit(100);
+        }
+    }
+
+
     /**
      * called before setData
+     *
      * @param indicator
      */
     public void addIndicator(Indicator indicator) {
@@ -270,7 +310,7 @@ public class LoopViewPager extends ViewPager {
 
             @Override
             public void onPageSelected(int position) {
-                for (Indicator in:mIndicators){
+                for (Indicator in : mIndicators) {
                     in.setSelected(position);
                 }
             }
@@ -282,5 +322,39 @@ public class LoopViewPager extends ViewPager {
         });
     }
 
+    public void removeIndicator(Indicator indicator) {
+        mIndicators.remove(indicator);
+    }
 
+
+    private class InternalScroller extends Scroller {
+        private int scrollDuration = 1000;
+
+        public InternalScroller(Context context) {
+            super(context);
+        }
+
+        public InternalScroller(Context context, Interpolator interpolator) {
+            super(context, interpolator);
+        }
+
+        public InternalScroller(Context context, Interpolator interpolator, boolean flywheel) {
+            super(context, interpolator, flywheel);
+        }
+
+        @Override
+        public void startScroll(int startX, int startY, int dx, int dy, int duration) {
+            super.startScroll(startX, startY, dx, dy, scrollDuration);
+        }
+
+        @Override
+        public void startScroll(int startX, int startY, int dx, int dy) {
+            super.startScroll(startX, startY, dx, dy, scrollDuration);
+        }
+
+        public void setDuration(int duration) {
+            scrollDuration = duration;
+        }
+
+    }
 }

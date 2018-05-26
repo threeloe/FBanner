@@ -16,8 +16,21 @@ import com.pngfi.banner.LoopViewPager;
 import com.pngfi.banner.adapter.ViewHolder;
 import com.pngfi.banner.indicator.NumberIndicator;
 import com.pngfi.banner.indicator.TitleIndicator;
+import com.pngfi.banner.transformer.AccordionTransformer;
+import com.pngfi.banner.transformer.CubeInTransformer;
+import com.pngfi.banner.transformer.CubeOutTransformer;
+import com.pngfi.banner.transformer.DefaultTransformer;
+import com.pngfi.banner.transformer.DepthPageTransformer;
+import com.pngfi.banner.transformer.MultiPageRotateDownPageTransformer;
+import com.pngfi.banner.transformer.RotateDownTransformer;
+import com.pngfi.banner.transformer.RotateUpTransformer;
+import com.pngfi.banner.transformer.ScaleInOutTransformer;
+import com.pngfi.banner.transformer.StackTransformer;
+import com.pngfi.banner.transformer.ZoomInTransformer;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     private TitleIndicator titleIndicator;
     private TitleIndicator titleIndicator2;
     private NumberIndicator numberIndicator2;
-
 
 
     private String[] images = {"https://pic.nanguazufang.cn/g3/05/d3/42f0-df28-4617-a216-71f15e1aaf7869",
@@ -56,14 +68,14 @@ public class MainActivity extends AppCompatActivity {
         firstBanner.setViewHolder(new BannerViewHolder());
         firstBanner.setPageMargin(dp2px(8));
         firstBanner.addIndicator(dotView);
+        firstBanner.setPageTransformer(true, new MultiPageRotateDownPageTransformer());
         firstBanner.setData(Arrays.asList(images));
-
-       //second
-       secondBanner=findViewById(R.id.second);
-       dotView2=findViewById(R.id.dotView2);
-       secondBanner.setViewHolder(new BannerViewHolder(false));
-       secondBanner.addIndicator(dotView2);
-       secondBanner.setData(Arrays.asList(images));
+        //second
+        secondBanner = findViewById(R.id.second);
+        dotView2 = findViewById(R.id.dotView2);
+        secondBanner.setViewHolder(new BannerViewHolder(false));
+        secondBanner.addIndicator(dotView2);
+        secondBanner.setData(Arrays.asList(images));
 
         //third
         thirdBanner = findViewById(R.id.thirdBanner);
@@ -71,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         thirdBanner.setViewHolder(new BannerViewHolder());
         thirdBanner.addIndicator(numberIndicator);
         thirdBanner.setData(Arrays.asList(images));
-
 
         //fourth
         fourthBanner = findViewById(R.id.fourthBanner);
@@ -83,30 +94,30 @@ public class MainActivity extends AppCompatActivity {
 
 
         //fifth
-        fifthBanner= findViewById(R.id.fifthBanner);
+        fifthBanner = findViewById(R.id.fifthBanner);
         titleIndicator2 = findViewById(R.id.titleIndicator2);
-        numberIndicator2=findViewById(R.id.numberIndicator2);
+        numberIndicator2 = findViewById(R.id.numberIndicator2);
         fifthBanner.setViewHolder(new BannerViewHolder(false));
         fifthBanner.addIndicator(titleIndicator2);
         fifthBanner.addIndicator(numberIndicator2);
         titleIndicator2.setTitles(Arrays.asList(titles));
+        fifthBanner.setAutoTurning(false);
         fifthBanner.setData(Arrays.asList(images));
-    }
+        fifthBanner.setPageTransformer(true, new RotateUpTransformer());
 
+    }
 
 
 
     public class BannerViewHolder implements ViewHolder<String> {
         private boolean isRoundedCorner = true;
-
-        public BannerViewHolder(){
+        public BannerViewHolder() {
 
         }
 
         public BannerViewHolder(boolean roundedCorner) {
             isRoundedCorner = roundedCorner;
         }
-
 
         @Override
         public View getView(Context context, final int position, String data) {

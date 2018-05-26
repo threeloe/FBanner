@@ -13,15 +13,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipChildren="false"
-            android:layerType="software"
             android:orientation="vertical">
 
             <com.pngfi.banner.LoopViewPager
                 android:id="@+id/banner"
+                android:clipChildren="false"
                 android:layout_width="match_parent"
-                android:layout_height="194dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
+                app:autoTurning="false"
+                android:layout_height="175dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
                 android:layout_marginTop="15dp" />
 
             <com.pngfi.banner.indicator.DotIndicator
@@ -92,6 +93,9 @@
 
             <com.pngfi.banner.LoopViewPager
                 android:id="@+id/fourthBanner"
+                app:manualTurning="false"
+                app:smoothScrollDuration="2000"
+                app:turningDuration="4000"
                 android:layout_width="match_parent"
                 android:layout_height="194dp" />
 

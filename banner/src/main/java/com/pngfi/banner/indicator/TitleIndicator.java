@@ -3,9 +3,9 @@ package com.pngfi.banner.indicator;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.pngfi.banner.R;
 
@@ -15,7 +15,7 @@ import java.util.List;
  * Created by pngfi on 2018/5/13.
  */
 
-public class TitleIndicator extends AppCompatTextView implements Indicator{
+public class TitleIndicator extends TextView implements Indicator{
 
     private static final int DEFAULT_TEXT_COLOR = Color.parseColor("#EAEAEA");
     private static final int DEFAULT_BACKGROUND_COLOR=Color.parseColor("#44B0B4A8");

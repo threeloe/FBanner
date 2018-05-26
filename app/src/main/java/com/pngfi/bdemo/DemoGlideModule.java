@@ -12,7 +12,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.request.RequestOptions;
 @GlideModule
-public final class PumpkinGlideModule extends AppGlideModule {
+public final class DemoGlideModule extends AppGlideModule {
 
 
     @Override

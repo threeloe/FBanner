@@ -3,9 +3,9 @@ package com.pngfi.banner.indicator;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.widget.TextView;
 
 
 import com.pngfi.banner.R;
@@ -17,7 +17,7 @@ import com.pngfi.banner.R;
  * background设置背景
  */
 
-public class NumberIndicator extends AppCompatTextView implements Indicator {
+public class NumberIndicator extends TextView implements Indicator {
 
     private static final int DEFAULT_TEXT_COLOR = Color.parseColor("#EAEAEA");
     private int mCount;
