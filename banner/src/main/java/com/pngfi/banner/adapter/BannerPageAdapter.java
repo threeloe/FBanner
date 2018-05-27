@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by pngfi on 2018/3/20.
  */
-public class LoopPageAdapter<R> extends PagerAdapter {
+public class BannerPageAdapter<R> extends PagerAdapter {
 
     protected List<R> mData = new ArrayList<>();
     protected ViewHolder<R> viewHolder;
@@ -41,7 +41,7 @@ public class LoopPageAdapter<R> extends PagerAdapter {
         return view == object;
     }
 
-    public LoopPageAdapter(ViewHolder holder) {
+    public BannerPageAdapter(ViewHolder holder) {
         viewHolder = holder;
         mData = new ArrayList<>();
     }
@@ -60,6 +60,11 @@ public class LoopPageAdapter<R> extends PagerAdapter {
     }
 
 
+    /**
+     * 由ViewPager中实际的position转换到用户认为的position
+     * @param position
+     * @return
+     */
     public int toRealPosition(int position) {
         if (once)
             return 0;
@@ -72,7 +77,11 @@ public class LoopPageAdapter<R> extends PagerAdapter {
         }
     }
 
-
+    /**
+     * 由用户认识到的position转换到ViewPager中对应的position
+     * @param realPosition
+     * @return
+     */
     public int toPosition(int realPosition) {
         if (once)
             return 0;

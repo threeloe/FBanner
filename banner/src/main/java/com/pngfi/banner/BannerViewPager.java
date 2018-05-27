@@ -6,13 +6,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
 
-import com.pngfi.banner.adapter.LoopPageAdapter;
+import com.pngfi.banner.adapter.BannerPageAdapter;
 import com.pngfi.banner.adapter.ViewHolder;
 import com.pngfi.banner.indicator.Indicator;
 
@@ -27,7 +28,7 @@ public class BannerViewPager extends ViewPager {
 
     private static final String TAG = "LoopViewPager";
 
-    private LoopPageAdapter mAdapter;
+    private BannerPageAdapter mAdapter;
 
 
     private ArrayList<OnPageChangeListener> mOnPageChangeListeners = new ArrayList<>();
@@ -84,7 +85,7 @@ public class BannerViewPager extends ViewPager {
                     return;
                 }
                 int item = BannerViewPager.super.getCurrentItem();
-                setCurrentItemSuper(item + 1, true);
+                BannerViewPager.super.setCurrentItem(item+1,true);
                 mHandler.sendEmptyMessageDelayed(MSG_AUTO_TURNING, turningDuration);
             }
         }
@@ -98,7 +99,7 @@ public class BannerViewPager extends ViewPager {
 
     @Override
     public void setCurrentItem(int item, boolean smoothScroll) {
-        setCurrentItemSuper(mAdapter.toPosition(item), smoothScroll);
+        BannerViewPager.super.setCurrentItem(mAdapter.toPosition(item),smoothScroll);
     }
 
     @Override
@@ -127,7 +128,7 @@ public class BannerViewPager extends ViewPager {
 
 
     public <T> void setViewHolder(ViewHolder<T> holder) {
-        mAdapter = new LoopPageAdapter(holder);
+        mAdapter = new BannerPageAdapter(holder);
         super.setAdapter(mAdapter);
     }
 
@@ -155,10 +156,6 @@ public class BannerViewPager extends ViewPager {
         }
     }
 
-
-    private void setCurrentItemSuper(int item, boolean smoothScroll) {
-        super.setCurrentItem(item, smoothScroll);
-    }
 
     /**
      * 是否手动翻页，
@@ -196,7 +193,7 @@ public class BannerViewPager extends ViewPager {
             return false;
     }
 
-    public LoopPageAdapter getAdapter() {
+    public BannerPageAdapter getAdapter() {
         return mAdapter;
     }
 
@@ -253,9 +250,9 @@ public class BannerViewPager extends ViewPager {
         public void onPageScrollStateChanged(int state) {
             if (state == ViewPager.SCROLL_STATE_IDLE || state == ViewPager.SCROLL_STATE_DRAGGING) {
                 if (BannerViewPager.super.getCurrentItem() == mAdapter.getCount() - 1) {
-                    setCurrentItemSuper(1, false);
+                    BannerViewPager.super.setCurrentItem(1,false);
                 } else if (BannerViewPager.super.getCurrentItem() == 0) {
-                    setCurrentItemSuper(mAdapter.getCount() - 2, false);
+                    BannerViewPager.super.setCurrentItem(mAdapter.getCount()-2,false);
                 }
             }
             for (OnPageChangeListener listener : mOnPageChangeListeners) {
