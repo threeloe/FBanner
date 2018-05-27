@@ -38,7 +38,12 @@ public class MainActivity extends AppCompatActivity {
     private NumberIndicator numberIndicator2;
 
 
-    private String[] images = {"https://pic.nanguazufang.cn/g3/05/d3/42f0-df28-4617-a216-71f15e1aaf7869"};
+    private String[] images = {"https://pic.nanguazufang.cn/g3/a0/17/cd21-14d9-4eb5-b6d5-f7656d786a2a94.jpeg",
+            "https://pic.nanguazufang.cn/g3/d8/ca/d795-74fa-4083-99fc-c81f5434d05a69.jpeg",
+            "https://pic.nanguazufang.cn/g3/1a/ad/b440-ef5e-46b4-91ff-42d1036595f906.jpeg",
+            "https://pic.nanguazufang.cn/g3/51/da/5985-a018-4246-bc57-8d2695cac25168.jpeg",
+            "https://pic.nanguazufang.cn/g3/fc/33/950f-7c49-4611-82ab-65e7550b0ca630.jpeg"
+    };
 
     private CharSequence[] titles = {"在不一样的十几节", "昨夜小楼又东风", "此去经年", "贝加尔湖畔", "悠长悠长而寂寥的雨巷"};
 
@@ -46,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //first
         firstBanner = findViewById(R.id.banner);
         dotView = findViewById(R.id.dotView);
@@ -93,9 +97,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public class BannerViewHolder implements ViewHolder<String> {
         private boolean isRoundedCorner = true;
+
         public BannerViewHolder() {
 
         }
