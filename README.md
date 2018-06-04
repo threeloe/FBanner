@@ -10,13 +10,18 @@
 
 
 ## 截图
-![demo.gif](https://github.com/pngfi/RangeSeekBar/blob/master/gif/demo.gif)
+|---|
+|![效果示例](http://oceh51kku.bkt.clouddn.com/banner_example1.png)|
+|![效果示例](http://oceh51kku.bkt.clouddn.com/banner_example1.png)|
+|![效果示例](http://oceh51kku.bkt.clouddn.com/banner_example1.png)|
+|![效果示例](http://oceh51kku.bkt.clouddn.com/banner_example1.png)|
+|![效果示例](http://oceh51kku.bkt.clouddn.com/banner_example1.png)|
 
 ## 下载
 The **LATEST_VERSION**: [![Download](https://api.bintray.com/packages/pngfi/maven/rangeseekbar/images/download.svg)](https://bintray.com/pngfi/maven/rangeseekbar/_latestVersion)
 ```groovy
   dependencies {
-     compile 'com.pngfi:rangeseekbar:${LATEST_VERSION}'
+     compile 'com.pngfi:fbanner:${LATEST_VERSION}'
   }
 ```
 ## 用法
