@@ -11,20 +11,20 @@
 
 ## 截图
 |---|
-|![效果示例](http://oceh51kku.bkt.clouddn.com/banner_example1.png)|
-|![效果示例](http://oceh51kku.bkt.clouddn.com/banner_example1.png)|
-|![效果示例](http://oceh51kku.bkt.clouddn.com/banner_example1.png)|
-|![效果示例](http://oceh51kku.bkt.clouddn.com/banner_example1.png)|
-|![效果示例](http://oceh51kku.bkt.clouddn.com/banner_example1.png)|
+|![效果示例](https://github.com/pngfi/FBanner/blob/master/art/1.png|
+|![效果示例](https://github.com/pngfi/FBanner/blob/master/art/2.png|
+|![效果示例](https://github.com/pngfi/FBanner/blob/master/art/3.png|
+|![效果示例](https://github.com/pngfi/FBanner/blob/master/art/4.png|
+|![效果示例](https://github.com/pngfi/FBanner/blob/master/art/5.png|
 
 ## 下载
-The **LATEST_VERSION**: [![Download](https://api.bintray.com/packages/pngfi/maven/rangeseekbar/images/download.svg)](https://bintray.com/pngfi/maven/rangeseekbar/_latestVersion)
+The **LATEST_VERSION**: [![Download](https://api.bintray.com/packages/pngfi/maven/fbanner/images/download.svg)](https://bintray.com/pngfi/maven/fbanner/_latestVersion)
 ```groovy
   dependencies {
      compile 'com.pngfi:fbanner:${LATEST_VERSION}'
   }
 ```
-## 用法
+## 基本使用
 ```
 
 <LinearLayout
@@ -57,41 +57,62 @@ The **LATEST_VERSION**: [![Download](https://api.bintray.com/packages/pngfi/mave
 
 ```
 
-listening the progress changes
+设置ViewHolder，在getView方法中定制UI
 ```
- seekBar.setOnSeekBarChangeListener(new RangeSeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(RangeSeekBar seekBar, float lesserProgress, float largerProgress, boolean fromUser) {
-                tv.setText((int) lesserProgress+" to "+(int)largerProgress);
-            }
-        });
-```
+ public class BannerViewHolder implements ViewHolder<String> {
+         private boolean isRoundedCorner = true;
 
-change the progress
-```
- seekbar.setProgress(lesser,larger);
-```
-get the current progress
-```
- float[] progress=seekbar.getProgress();
- float lesserProgress=progress[0];
- float largerProgress=progress[1];
+         public BannerViewHolder() {
+
+         }
+
+         public BannerViewHolder(boolean roundedCorner) {
+             isRoundedCorner = roundedCorner;
+         }
+
+         @Override
+         public View getView(Context context, final int position, String data) {
+             final View inflate = LayoutInflater.from(context).inflate(R.layout.item_banner_apartment_activity, null);
+             ImageView imageView = inflate.findViewById(R.id.image);
+             if (isRoundedCorner) {
+                 GlideApp.with(imageView).load(data).transforms(new CenterCrop(), new RoundedCorners(dp2px(10))).disallowHardwareConfig().into(imageView);
+             } else {
+                 GlideApp.with(imageView).load(data).transforms(new CenterCrop()).disallowHardwareConfig().into(imageView);
+             }
+
+             inflate.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     Toast.makeText(MainActivity.this, "click" + position, Toast.LENGTH_SHORT).show();
+                 }
+             });
+             return inflate;
+         }
+     }
+
+
+    firstBanner.setViewHolder(new BannerViewHolder());
 
 ```
-## Attr
+添加指示器：
+
+```
+   firstBanner.addIndicator(dotView);
+```
+设置数据：
+```
+    firstBanner.setData(Arrays.asList(images));
+```
+上面四步就完成FBanner的基本使用,其中BannerViewPager就是一个增强版的ViewPager。DotIndicator是点状指示器。
+
+## BannerViewPager
+
  attr | format | desc
   -------- | ---|---
-  rb_max|float|the max value of progress,default 100
-  rb_min|float|the min value of progress,default 0
-  rb_progressBackground|color|the background color of progress bar
-  rb_progressBackgroundHeight|dimension|background height
-  rb_progressColor|color|the progress color
-  rb_progressHeight|dimension|the height of progress bar
-  rb_thumb|drawable|the drawable resource of SeekBar button, support multiple drawable. note:the StateListDrawable only support pressed state.
-  rb_stepCount|positive integer|the progress is divided into many `step`s, this is the count of steps, had better assign it.
-  rb_gap|positive integer|the minimal step count between two thumbs,default 0.
-  rb_seekToTouch|boolean|the thumb will seek to the location where user click if true,default true.
-  rb_shadowColor|color|shadow color around thumb
-  rb_shadowRadius|dimension|shadow radius
-  rb_shadowOffsetX|dimension|horizontal offset of shadow
-  rb_shadowOffsetY|dimension|vertical offset  of shadow
+  autoTurning|boolean|是否自动翻页，默认true
+  turningDuration|integer|自动翻页的间隔，单位毫秒，默认2000
+  manualTurning|boolean|是否手动翻页，默认true
+  smoothScrollDuration|integer|滑动动画时间
+
+## 指示器
+
