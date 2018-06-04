@@ -6,4 +6,4 @@
 /build
 /captures
 .externalNativeBuild
-.upload.sh
+upload.sh
