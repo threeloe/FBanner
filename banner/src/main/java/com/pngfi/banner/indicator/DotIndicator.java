@@ -15,25 +15,25 @@ import com.pngfi.banner.R;
 /**
  * Created by pngfi on 2018/3/21.
  *
- * dot attr设置如下的drawable
+ * dot,set the drawable like this:
  *
- * <selector xmlns:android="http://schemas.android.com/apk/res/android">
- *  <item android:state_selected="false">
- *      <shape android:shape="oval">
- *          <solid android:color="#D8D8D8" />
- *          <size android:width="5dp" android:height="5dp" />
- *      </shape>
- *  </item>
- *  <item android:state_selected="true">
- *      <shape  android:shape="oval">
- *          <solid android:color="@android:color/white" />
- *          <stroke android:width="0.5dp" android:color="#000000" />
- *          <size android:width="5dp" android:height="5dp" />
- *      </shape>
- *  </item>
- * </selector>
+ * &lt;selector xmlns:android="http://schemas.android.com/apk/res/android"&gt;
+ *  &lt;item android:state_selected="false"&gt;
+ *      &lt;shape android:shape="oval"&gt;
+ *          &lt;&lt;solid android:color="#D8D8D8" /&gt;
+ *          &lt;size android:width="5dp" android:height="5dp" /&gt;
+ *      &lt;&lt;/shape&gt;
+ *  &lt;/item&gt;
+ *  &lt;item android:state_selected="true"&gt;
+ *      &lt;shape  android:shape="oval"&gt;
+ *          &lt;solid android:color="@android:color/white" /&gt;
+ *          &lt;stroke android:width="0.5dp" android:color="#000000" /&gt;
+ *          &lt;size android:width="5dp" android:height="5dp" /&gt;
+ *      &lt;/shape&gt;
+ *  &lt;/item&gt;
+ * &lt;/selector&gt;
  *
- * dotMargin设置点之间的距离
+ * dotMargin,the distance between dots
  */
 
 public class DotIndicator extends LinearLayout implements Indicator {

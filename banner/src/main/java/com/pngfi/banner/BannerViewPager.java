@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Interpolator;
@@ -34,9 +33,9 @@ public class BannerViewPager extends ViewPager {
     private ArrayList<OnPageChangeListener> mOnPageChangeListeners = new ArrayList<>();
     private static final int MSG_AUTO_TURNING = 0X520;
 
-    //是否能手动翻页
+
     private boolean manualTurning = true;
-    //是否自动翻页
+
     private boolean autoTurning = true;
     private int turningDuration = 2000;
     private int smoothScrollDuration = 900;
@@ -79,7 +78,7 @@ public class BannerViewPager extends ViewPager {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == MSG_AUTO_TURNING) {
-                //没有数据
+                //no data or only one
                 if (mAdapter == null || mAdapter.getCount() == 0 || mAdapter.getCount() == 1 || !autoTurning) {
                     stopTurning();
                     return;
@@ -158,9 +157,8 @@ public class BannerViewPager extends ViewPager {
 
 
     /**
-     * 是否手动翻页，
      *
-     * @param manualTurning 默认true
+     * @param manualTurning  default true
      */
     public void setManualTurning(boolean manualTurning) {
         this.manualTurning = manualTurning;
@@ -169,7 +167,6 @@ public class BannerViewPager extends ViewPager {
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
-        //window 没有焦点之后停止滑动，回来之后再开始滑动
         if (hasWindowFocus) {
             startTuring();
         } else {
@@ -221,7 +218,7 @@ public class BannerViewPager extends ViewPager {
 
 
     /**
-     * 这个Listener用于分发所有事件
+     * dispatch all PageChange events
      */
     private OnPageChangeListener proxyRootListener = new OnPageChangeListener() {
         private int mPreviousPosition = -1;
@@ -284,11 +281,11 @@ public class BannerViewPager extends ViewPager {
     @Override
     public void setPageTransformer(boolean reverseDrawingOrder, PageTransformer transformer, int pageLayerType) {
         super.setPageTransformer(reverseDrawingOrder, transformer, pageLayerType);
-        if (transformer == null) {
+       if (transformer == null) {
             setOffscreenPageLimit(1);
         } else {
-            setOffscreenPageLimit(100);
-        }
+           setOffscreenPageLimit(100);
+       }
     }
 
 

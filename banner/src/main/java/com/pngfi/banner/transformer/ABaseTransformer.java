@@ -54,7 +54,6 @@ public abstract class ABaseTransformer implements PageTransformer {
 	 * If the position offset of a fragment is less than negative one or greater than one, returning true will set the
 	 * fragment alpha to 0f. Otherwise fragment alpha is always defaulted to 1f.
 	 *
-	 * @return
 	 */
 	protected boolean hideOffscreenPages() {
 		return true;
@@ -63,7 +62,6 @@ public abstract class ABaseTransformer implements PageTransformer {
 	/**
 	 * Indicates if the default animations of the view pager should be used.
 	 *
-	 * @return
 	 */
 	protected boolean isPagingEnabled() {
 		return false;
@@ -97,11 +95,11 @@ public abstract class ABaseTransformer implements PageTransformer {
 		page.setTranslationX(isPagingEnabled() ? 0f : -width * position);
 
 		if (hideOffscreenPages()) {
+			page.setEnabled(false);
 			page.setAlpha(position <= -1f || position >= 1f ? 0f : 1f);
-			//page.setEnabled(false);
 		} else {
 			page.setEnabled(true);
-			//page.setAlpha(1f);
+			page.setAlpha(1f);
 		}
 	}
 

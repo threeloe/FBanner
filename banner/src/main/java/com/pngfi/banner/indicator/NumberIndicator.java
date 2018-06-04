@@ -13,8 +13,8 @@ import com.pngfi.banner.R;
 /**
  * Created by pngfi on 2018/5/5.
  *
- * NumberIndicator是一个TextView,textSize和textColor这只字体的颜色和大小
- * background设置背景
+ * NumberIndicator is a subclass of TextView, you can use textSize ,textColor and background
+ * just like a TextView.
  */
 
 public class NumberIndicator extends TextView implements Indicator {

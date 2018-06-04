@@ -62,8 +62,6 @@ public class BannerPageAdapter<R> extends PagerAdapter {
 
     /**
      * 由ViewPager中实际的position转换到用户认为的position
-     * @param position
-     * @return
      */
     public int toRealPosition(int position) {
         if (once)
@@ -79,8 +77,6 @@ public class BannerPageAdapter<R> extends PagerAdapter {
 
     /**
      * 由用户认识到的position转换到ViewPager中对应的position
-     * @param realPosition
-     * @return
      */
     public int toPosition(int realPosition) {
         if (once)

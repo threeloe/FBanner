@@ -9,14 +9,12 @@ import java.util.List;
 public interface Indicator {
 
     /**
-     * 设置页面的数量
-     * @param count
+     * set the count of page
      */
     void setCount(int count);
 
     /**
-     * 设置选中了position页面
-     * @param position
+     * set the position of the page that is current selected
      */
     void setSelected(int position);
 

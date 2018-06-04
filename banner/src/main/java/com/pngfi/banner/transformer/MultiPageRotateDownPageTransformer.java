@@ -15,27 +15,24 @@ public class MultiPageRotateDownPageTransformer implements ViewPager.PageTransfo
 
     @Override
     public void transformPage(View view, float position) {
-        Log.i("transformPage",view.hashCode()+"xxxxx"+position);
-        if (position < -1) { // [-Infinity,-1)
+        if (position < -1) {
             // This page is way off-screen to the left.
             view.setRotation(mMaxRotate * -1);
             view.setPivotX(view.getWidth());
             view.setPivotY(view.getHeight());
 
-        } else if (position <= 1) { // [-1,1]
+        } else if (position <= 1) {
 
-            if (position < 0)//[0，-1]
-            {
+            if (position < 0) {
                 view.setPivotX(view.getWidth() * (0.5f + 0.5f * (-position)));
                 view.setPivotY(view.getHeight());
                 view.setRotation(mMaxRotate * position);
-            } else//[1,0]
-            {
+            } else {
                 view.setPivotX(view.getWidth() * 0.5f * (1 - position));
                 view.setPivotY(view.getHeight());
                 view.setRotation(mMaxRotate * position);
             }
-        } else { // (1,+Infinity]
+        } else {
             // This page is way off-screen to the right.
             view.setRotation(mMaxRotate);
             view.setPivotX(view.getWidth() * 0);
