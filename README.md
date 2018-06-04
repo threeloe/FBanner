@@ -10,13 +10,13 @@
 
 
 ## 截图
-|效果图|
-|---|
-|![效果示例](https://github.com/pngfi/FBanner/blob/master/art/1.png)|
-|![效果示例](https://github.com/pngfi/FBanner/blob/master/art/2.png)|
-|![效果示例](https://github.com/pngfi/FBanner/blob/master/art/3.png)|
-|![效果示例](https://github.com/pngfi/FBanner/blob/master/art/4.png)|
-|![效果示例](https://github.com/pngfi/FBanner/blob/master/art/5.png)|
+![效果示例](https://github.com/pngfi/FBanner/blob/master/art/1.png)
+![效果示例](https://github.com/pngfi/FBanner/blob/master/art/2.png)
+![效果示例](https://github.com/pngfi/FBanner/blob/master/art/3.png)
+![效果示例](https://github.com/pngfi/FBanner/blob/master/art/4.png)
+![效果示例](https://github.com/pngfi/FBanner/blob/master/art/5.png)
+
+[Demo APK](https://github.com/pngfi/FBanner/blob/master/art/demo.apk) 
 
 ## 下载
 The **LATEST_VERSION**: [![Download](https://api.bintray.com/packages/pngfi/maven/fbanner/images/download.svg)](https://bintray.com/pngfi/maven/fbanner/_latestVersion)
