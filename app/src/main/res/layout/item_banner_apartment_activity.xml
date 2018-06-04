@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<com.sohu.pumpkin.ui.view.widget.ShadowLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:sl_cornerRadius="5dp"
-    app:sl_dx="0dp"
-    app:sl_dy="4dp"
-    android:layout_marginLeft="-30dp"
-    android:layout_marginBottom="-19dp"
-    app:sl_shadowColor="#19000000"
-    app:sl_shadowRadius="15dp">-->
 
 <ImageView android:id="@+id/image"
     android:layout_width="match_parent"
     android:layout_height="194dp"
     xmlns:android="http://schemas.android.com/apk/res/android" />
-<!--</com.sohu.pumpkin.ui.view.widget.ShadowLayout>-->

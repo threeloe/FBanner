@@ -30,7 +30,7 @@ publish {
     userOrg = 'pngfi'//bintray.com用户名
     groupId = 'com.pngfi'//jcenter上的路径
     artifactId = 'fbanner'//项目名称
-    publishVersion = '0.9.0'//版本号
+    publishVersion = '0.9.1'//版本号
     desc = 'A flexible banner for Android,easy to use'//描述，不重要
     website = 'https://github.com/pngfi/FBanner'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
 }

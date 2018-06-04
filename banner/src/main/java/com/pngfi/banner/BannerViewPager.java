@@ -84,7 +84,7 @@ public class BannerViewPager extends ViewPager {
                     return;
                 }
                 int item = BannerViewPager.super.getCurrentItem();
-                BannerViewPager.super.setCurrentItem(item+1,true);
+                BannerViewPager.super.setCurrentItem(item + 1, true);
                 mHandler.sendEmptyMessageDelayed(MSG_AUTO_TURNING, turningDuration);
             }
         }
@@ -98,7 +98,7 @@ public class BannerViewPager extends ViewPager {
 
     @Override
     public void setCurrentItem(int item, boolean smoothScroll) {
-        BannerViewPager.super.setCurrentItem(mAdapter.toPosition(item),smoothScroll);
+        BannerViewPager.super.setCurrentItem(mAdapter.toPosition(item), smoothScroll);
     }
 
     @Override
@@ -156,13 +156,19 @@ public class BannerViewPager extends ViewPager {
     }
 
 
-    /**
-     *
-     * @param manualTurning  default true
-     */
     public void setManualTurning(boolean manualTurning) {
         this.manualTurning = manualTurning;
     }
+
+
+    public void setTurningDuration(int turningDuration){
+       this.turningDuration=turningDuration;
+    }
+
+    public void setSmoothScrollDuration(int smoothScrollDuration){
+        mScroller.setDuration(smoothScrollDuration);
+    }
+
 
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
@@ -247,9 +253,9 @@ public class BannerViewPager extends ViewPager {
         public void onPageScrollStateChanged(int state) {
             if (state == ViewPager.SCROLL_STATE_IDLE || state == ViewPager.SCROLL_STATE_DRAGGING) {
                 if (BannerViewPager.super.getCurrentItem() == mAdapter.getCount() - 1) {
-                    BannerViewPager.super.setCurrentItem(1,false);
+                    BannerViewPager.super.setCurrentItem(1, false);
                 } else if (BannerViewPager.super.getCurrentItem() == 0) {
-                    BannerViewPager.super.setCurrentItem(mAdapter.getCount()-2,false);
+                    BannerViewPager.super.setCurrentItem(mAdapter.getCount() - 2, false);
                 }
             }
             for (OnPageChangeListener listener : mOnPageChangeListeners) {
@@ -281,11 +287,11 @@ public class BannerViewPager extends ViewPager {
     @Override
     public void setPageTransformer(boolean reverseDrawingOrder, PageTransformer transformer, int pageLayerType) {
         super.setPageTransformer(reverseDrawingOrder, transformer, pageLayerType);
-       if (transformer == null) {
+        if (transformer == null) {
             setOffscreenPageLimit(1);
         } else {
-           setOffscreenPageLimit(100);
-       }
+            setOffscreenPageLimit(100);
+        }
     }
 
 

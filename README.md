@@ -10,6 +10,7 @@
 
 
 ## 截图
+|效果图|
 |---|
 |![效果示例](https://github.com/pngfi/FBanner/blob/master/art/1.png)|
 |![效果示例](https://github.com/pngfi/FBanner/blob/master/art/2.png)|
@@ -106,7 +107,6 @@ The **LATEST_VERSION**: [![Download](https://api.bintray.com/packages/pngfi/mave
 上面四步就完成FBanner的基本使用,其中BannerViewPager就是一个增强版的ViewPager。DotIndicator是点状指示器。
 
 ## BannerViewPager
-
  attr | format | desc
   -------- | ---|---
   autoTurning|boolean|是否自动翻页，默认true
@@ -114,5 +114,49 @@ The **LATEST_VERSION**: [![Download](https://api.bintray.com/packages/pngfi/mave
   manualTurning|boolean|是否手动翻页，默认true
   smoothScrollDuration|integer|滑动动画时间
 
-## 指示器
+ 可以正常使用ViewPager的几乎所有方法，目前对于PageTransformer的支持存在以定问题，
+ 如果必须要使用PageTransformer的话要保证页面总数量不要太多。
 
+
+
+## 指示器
+点状指示器：
+```
+<com.pngfi.banner.indicator.DotIndicator
+                android:id="@+id/dotView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="21dp"
+                android:layout_marginTop="15dp"
+                app:dot="@drawable/default_bg_dot_view"
+                app:dotMargin="16dp" />
+
+```
+数字指示器：
+```
+    <com.pngfi.banner.indicator.NumberIndicator
+                    android:id="@+id/numberIndicator"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/bg_number_indicator"
+                    android:textColor="@color/colorAccent" />
+```
+标题指示器：
+```
+    <com.pngfi.banner.indicator.TitleIndicator
+                    android:id="@+id/titleIndicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="20dp" />
+```
+标题指示器需要另外设置标题
+```
+   titleIndicator.setTitles(Arrays.asList(titles));
+```
