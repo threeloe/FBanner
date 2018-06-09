@@ -2,6 +2,7 @@
 [![License](http://img.shields.io/badge/License-Apache%202.0-brightgreen.svg?style=flat)](https://opensource.org/licenses/Apache-2.0)
 
 **一个灵活易用的Banner组件**
+实现原理请看[打造一个灵活易用的Banner组件](https://www.jianshu.com/p/4708e7da2013)
 ****
 
 ## 特点
