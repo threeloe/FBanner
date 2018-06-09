@@ -1,8 +1,7 @@
 [![API](https://img.shields.io/badge/API-11%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=11)
 [![License](http://img.shields.io/badge/License-Apache%202.0-brightgreen.svg?style=flat)](https://opensource.org/licenses/Apache-2.0)
 
-**一个灵活易用的Banner组件**
-实现原理请看[打造一个灵活易用的Banner组件](https://www.jianshu.com/p/4708e7da2013)
+**一个灵活易用的Banner组件,具体实现原理请看[打造一个灵活易用的Banner组件](https://www.jianshu.com/p/4708e7da2013)**
 ****
 
 ## 特点
