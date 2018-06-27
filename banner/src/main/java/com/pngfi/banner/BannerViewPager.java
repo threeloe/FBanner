@@ -142,7 +142,7 @@ public class BannerViewPager extends ViewPager {
         }
 
         mAdapter.setData(data);
-        setCurrentItem(0);
+        setCurrentItem(0,false);
         startTuring();
     }
 
