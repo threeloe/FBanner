@@ -61,10 +61,11 @@ public class BannerPageAdapter<R> extends PagerAdapter {
 
 
     /**
-     * 由ViewPager中实际的position转换到用户认为的position
+     * switch from the position in ViewPager to
+     * the position in user's eyes
      */
     public int toRealPosition(int position) {
-        if (once || mData.size()==0)
+        if (once || mData.size() == 0)
             return 0;
         if (position == getCount() - 1) {
             return 0;
@@ -76,17 +77,18 @@ public class BannerPageAdapter<R> extends PagerAdapter {
     }
 
     /**
-     * 由用户认识到的position转换到ViewPager中对应的position
+     * switch from the position in user's eyes to
+     * the position in ViewPager
      */
     public int toPosition(int realPosition) {
-        //只有一条数据或者从没设置过数据
-        if (once ||mData.size()==1)
+        //only one or never set data
+        if (once || mData.size() == 0)
             return 0;
         return realPosition + 1;
     }
 
     @Override
     public int getItemPosition(Object object) {
-        return  POSITION_NONE;
+        return POSITION_NONE;
     }
 }
